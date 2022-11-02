@@ -124,12 +124,12 @@ namespace MMT.Core
 
         private void MigrateDisabledProfiles()
         {
-            string _disabledProfilesPath = Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)!, "disabled-profiles.txt");
+            string _disabledProfilesPath = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath)!, "disabled-profiles.txt");
 
-            List<string> oldDisabledProfiles = new List<string>();
+            List<string> oldDisabledProfiles = new();
             if (File.Exists(_disabledProfilesPath))
             {
-                using StreamReader? sr = new StreamReader(_disabledProfilesPath);
+                using StreamReader? sr = new (_disabledProfilesPath);
                 while (!sr.EndOfStream)
                 {
                     oldDisabledProfiles.Add(sr.ReadLine()!);
@@ -139,7 +139,7 @@ namespace MMT.Core
                     .Select(disableProfileName => _profiles.FirstOrDefault(profile => profile.Name == disableProfileName))
                     .Where(profileToMigrate => profileToMigrate != null)
                     .ToList()
-                    .ForEach(Disable);
+                    .ForEach(Disable!);
 
                 File.Delete(_disabledProfilesPath);
             }

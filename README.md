@@ -9,7 +9,7 @@ Launcher to manage profiles and open multiple instances of Microsoft Teams deskt
 
 ## Support
 
-If this project help you, you can buy me a coffee :)
+If this project help you, you can buy **Cleriton Cunha** a coffee :)
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=QRGN6P42KKBXN&currency_code=USD&source=url)
 
@@ -53,6 +53,7 @@ You can download the latest version in [Releases](https://github.com/TonCunha/mu
 ## Authors
 
 * **Cleriton Cunha** - *Initial work* - [TonCunha](https://github.com/TonCunha)
+* **Trond Aarskog** - * .NET 6 and self contained - [taarskog](https://github.com/taarskog)
 
 ## License
 

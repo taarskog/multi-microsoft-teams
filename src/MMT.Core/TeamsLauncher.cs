@@ -5,13 +5,13 @@ using System.Threading;
 
 namespace MMT.Core
 {
-    public class TeamsLauncher
+    public static class TeamsLauncher
     {
-        public void Start(Profile profile)
+        public static void Start(Profile profile)
         {
             if (string.IsNullOrWhiteSpace(profile.Name))
             {
-                throw new ArgumentNullException("Profile name is required.");
+                throw new ArgumentNullException(nameof(profile.Name), "Profile name is required.");
             }
 
             string? originalUserProfilePath = Environment.GetEnvironmentVariable("USERPROFILE");
@@ -28,7 +28,7 @@ namespace MMT.Core
             Environment.SetEnvironmentVariable("USERPROFILE", originalUserProfilePath);
         }
 
-        private void UpdateProfileAndStartTeams(string updatePath)
+        private static void UpdateProfileAndStartTeams(string updatePath)
         {
             var updateExeProcess = new Process
             {
@@ -47,7 +47,7 @@ namespace MMT.Core
             updateExeProcess.WaitForExit();
         }
 
-        public void CloseAllInstances()
+        public static void CloseAllInstances()
         {
             var process = new Process
             {

@@ -1,4 +1,4 @@
-﻿using Hardcodet.Wpf.TaskbarNotification;
+﻿//using Hardcodet.Wpf.TaskbarNotification;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MMT.Core;
@@ -18,14 +18,14 @@ namespace MMT.UI
     public partial class MainWindow : MetroWindow
     {
         private readonly ProfileManager _profileManager;
-        private readonly TeamsLauncher _teamsLauncher;
+        //private readonly TeamsLauncher _teamsLauncher;
         private readonly RegistryManager _registryManager;
 
         public MainWindow()
         {
             InitializeComponent();
             _profileManager = new ProfileManager();
-            _teamsLauncher = new TeamsLauncher();
+            //_teamsLauncher = new TeamsLauncher();
             _registryManager = new RegistryManager();
             DataContext = _profileManager;
             ChangeTabVisibility();
@@ -51,7 +51,7 @@ namespace MMT.UI
         {
             if (sender is MenuItem menuItem && menuItem.DataContext is Profile profile)
             {
-                _teamsLauncher.Start(profile);
+                TeamsLauncher.Start(profile);
             }
         }
 
@@ -72,13 +72,13 @@ namespace MMT.UI
                 WindowState = WindowState.Minimized;
                 MetroWindow_StateChanged(null, null);
 
-                Thread thread = new Thread(() =>
+                Thread thread = new (() =>
                 {
                     foreach (Profile item in lstProfiles.Items.OfType<Profile>())
                     {
                         if (!item.IsDisabled)
                         {
-                            _teamsLauncher.Start(item);
+                            TeamsLauncher.Start(item);
                         }
                     }
                 });
@@ -92,7 +92,7 @@ namespace MMT.UI
             {
                 Visibility = Visibility.Collapsed;
                 _tray.Visibility = Visibility.Visible;
-                _tray.ShowBalloonTip(StaticResources.AppName, "This app is running", BalloonIcon.Info);
+                _tray.ShowNotification(StaticResources.AppName, "This app is running", H.NotifyIcon.Core.NotificationIcon.Info);
             }
             else
             {
@@ -149,7 +149,7 @@ namespace MMT.UI
                         .ToList()
                         .ForEach((item) =>
                     {
-                        _teamsLauncher.Start(item);
+                        TeamsLauncher.Start(item);
                     });
                 }
             }
@@ -183,7 +183,7 @@ namespace MMT.UI
                                 var controller = await MessageHelper.Wait("Processing, please wait.");
                                 _ = Task.Run(() =>
                                   {
-                                      _teamsLauncher.CloseAllInstances();
+                                      TeamsLauncher.CloseAllInstances();
                                       _profileManager.Delete(selectedProfile);
                                   }).ContinueWith(a => controller.CloseAsync());
                             }

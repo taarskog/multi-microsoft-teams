@@ -9,7 +9,7 @@ namespace MMT.Core
 
         public RegistryManager()
         {
-            _registryKey = Registry.CurrentUser.OpenSubKey(StaticResources.StartupApplications, true);
+            _registryKey = Registry.CurrentUser.OpenSubKey(StaticResources.StartupApplications, true)!;
         }
 
         public bool IsApplicationInStartup(string name)
@@ -19,7 +19,7 @@ namespace MMT.Core
 
         public void AddApplicationInStartup(string name)
         {
-            _registryKey.SetValue(name, Process.GetCurrentProcess().MainModule.FileName);
+            _registryKey.SetValue(name, System.Environment.ProcessPath ?? throw new System.Exception("Process path is null."));
         }
 
         public void RemoveApplicationFromStartup(string appName)
